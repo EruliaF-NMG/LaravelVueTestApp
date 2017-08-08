@@ -18,7 +18,21 @@ class UsersTableSeeder extends Seeder
         	'password'=>bcrypt('12345'),
         );
 
+        $user2=array(
+            'name'=>'Roshan', 
+            'email'=>"nisal1.nmg@gmail.com", 
+            'password'=>bcrypt('12345'),
+        );
+
+        $user3=array(
+            'name'=>'Saman', 
+            'email'=>"nisal2.nmg@gmail.com", 
+            'password'=>bcrypt('12345'),
+        );
+
         User::create($user1);
+         User::create($user2);
+          User::create($user3);
 
     }
 }

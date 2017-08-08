@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,8 +70,8 @@
 "use strict";
 
 
-var bind = __webpack_require__(9);
-var isBuffer = __webpack_require__(30);
+var bind = __webpack_require__(10);
+var isBuffer = __webpack_require__(36);
 
 /*global toString:true*/
 
@@ -1285,133 +1285,6 @@ var index_esm = {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(32);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(10);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11503,7 +11376,134 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(38);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 6 */
@@ -14209,12 +14209,55 @@ if (inBrowser && window.Vue) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(29);
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return clientId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return clientSecret; });
+/* unused harmony export apiDomain */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return loginUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getUserList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getHeader; });
+/*
+* @Author: admin
+* @Date:   2017-08-06 13:45:49
+* @Last Modified by:   Nisal
+* @Last Modified time: 2017-08-08 21:38:44
+*/
+
+var clientId = "2";
+
+var clientSecret = "Uux8Ln9Qq2pJPed3iVzvwrauNfO0hJFnJATqmS9O";
+
+var apiDomain = "http://localhost:8000/";
+
+var loginUrl = apiDomain + "oauth/token";
+
+var getUser = apiDomain + "api/user";
+
+var getUserList = apiDomain + "api/user";
+
+var getHeader = function getHeader() {
+
+	var tokenData = JSON.parse(localStorage.getItem("userInfo"));
+
+	var headers = {
+		'Accept': 'application/json',
+		'Authorization': 'Bearer ' + tokenData.access_token
+	};
+
+	return headers;
+};
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(35);
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14232,19 +14275,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(33);
-var buildURL = __webpack_require__(35);
-var parseHeaders = __webpack_require__(36);
-var isURLSameOrigin = __webpack_require__(37);
-var createError = __webpack_require__(11);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
+var settle = __webpack_require__(39);
+var buildURL = __webpack_require__(41);
+var parseHeaders = __webpack_require__(42);
+var isURLSameOrigin = __webpack_require__(43);
+var createError = __webpack_require__(12);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(44);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -14341,7 +14384,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(39);
+      var cookies = __webpack_require__(45);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -14419,13 +14462,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(34);
+var enhanceError = __webpack_require__(40);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -14444,7 +14487,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14456,7 +14499,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14482,25 +14525,25 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(15);
-module.exports = __webpack_require__(60);
+__webpack_require__(16);
+module.exports = __webpack_require__(67);
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_es6_promise_auto__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_es6_promise_auto__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_es6_promise_auto__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store_js__ = __webpack_require__(53);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -14512,9 +14555,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__webpack_require__(49);
+__webpack_require__(56);
 
-window.Vue = __webpack_require__(5);
+window.Vue = __webpack_require__(3);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -14522,7 +14565,7 @@ window.Vue = __webpack_require__(5);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app', __webpack_require__(54));
+Vue.component('app', __webpack_require__(61));
 //
 __WEBPACK_IMPORTED_MODULE_1__routes_js__["a" /* default */].beforeEach(function (to, from, next) {
   var auth = JSON.parse(localStorage.getItem("userInfo"));
@@ -14545,18 +14588,18 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(17).polyfill();
+module.exports = __webpack_require__(18).polyfill();
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {var require;/*!
@@ -14696,7 +14739,7 @@ function flush() {
 function attemptVertx() {
   try {
     var r = require;
-    var vertx = __webpack_require__(18);
+    var vertx = __webpack_require__(19);
     vertxNext = vertx.runOnLoop || vertx.runOnContext;
     return useVertxTimer();
   } catch (e) {
@@ -15717,16 +15760,16 @@ return Promise$2;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(4)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15741,10 +15784,10 @@ return Promise$2;
 
 var routes = [{
   path: '/',
-  component: __webpack_require__(20)
+  component: __webpack_require__(21)
 }, {
   path: '/login',
-  component: __webpack_require__(23),
+  component: __webpack_require__(24),
   meta: { requiresAuth: false }
 }, {
   path: '/dashboard',
@@ -15752,7 +15795,7 @@ var routes = [{
   meta: { requiresAuth: true }
 }, {
   path: '/chat',
-  component: __webpack_require__(75),
+  component: __webpack_require__(29),
   meta: { requiresAuth: true }
 }];
 
@@ -15762,15 +15805,15 @@ var routes = [{
 }));
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(21),
-  /* template */
   __webpack_require__(22),
+  /* template */
+  __webpack_require__(23),
   /* styles */
   null,
   /* scopeId */
@@ -15778,7 +15821,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Example.vue"
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Example.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15789,9 +15832,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-07f3c21a", Component.options)
+    hotAPI.createRecord("data-v-0a6bc820", Component.options)
   } else {
-    hotAPI.reload("data-v-07f3c21a", Component.options)
+    hotAPI.reload("data-v-0a6bc820", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -15802,7 +15845,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15865,7 +15908,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -15887,18 +15930,18 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-07f3c21a", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-0a6bc820", module.exports)
   }
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(24),
+  __webpack_require__(25),
   /* template */
   __webpack_require__(26),
   /* styles */
@@ -15908,7 +15951,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Login.vue"
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15919,9 +15962,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-07532db2", Component.options)
+    hotAPI.createRecord("data-v-e8077422", Component.options)
   } else {
-    hotAPI.reload("data-v-07532db2", Component.options)
+    hotAPI.reload("data-v-e8077422", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -15932,13 +15975,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(8);
 //
 //
 //
@@ -16013,7 +16056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             var userToken = {};
 
-            axios.post(__WEBPACK_IMPORTED_MODULE_1__config__["e" /* loginUrl */], postUser).then(function (response) {
+            axios.post(__WEBPACK_IMPORTED_MODULE_1__config__["f" /* loginUrl */], postUser).then(function (response) {
 
                 if (response.status == 200) {
 
@@ -16041,46 +16084,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {}
 });
-
-/***/ }),
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return clientId; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return clientSecret; });
-/* unused harmony export apiDomain */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loginUrl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getHeader; });
-/*
-* @Author: admin
-* @Date:   2017-08-06 13:45:49
-* @Last Modified by:   admin
-* @Last Modified time: 2017-08-06 19:53:03
-*/
-
-var clientId = "2";
-
-var clientSecret = "qlSreb1B5H4O8E4vplAVEWEnD65MlxIyC2896WV1";
-
-var apiDomain = "http://localhost:8000/";
-
-var loginUrl = apiDomain + "oauth/token";
-
-var getUser = apiDomain + "api/user";
-
-var getHeader = function getHeader() {
-
-	var tokenData = JSON.parse(localStorage.getItem("userInfo"));
-
-	var headers = {
-		'Accept': 'application/json',
-		'Authorization': 'Bearer ' + tokenData.access_token
-	};
-
-	return headers;
-};
 
 /***/ }),
 /* 26 */
@@ -16181,7 +16184,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-07532db2", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-e8077422", module.exports)
   }
 }
 
@@ -16202,7 +16205,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Dashboard.vue"
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -16213,9 +16216,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3d41ca46", Component.options)
+    hotAPI.createRecord("data-v-3f17cc9a", Component.options)
   } else {
-    hotAPI.reload("data-v-3d41ca46", Component.options)
+    hotAPI.reload("data-v-3f17cc9a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16248,7 +16251,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-3d41ca46", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3f17cc9a", module.exports)
   }
 }
 
@@ -16256,13 +16259,205 @@ if (false) {
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(30),
+  /* template */
+  __webpack_require__(34),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\ChatPage.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ChatPage.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5a20541e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5a20541e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chat_ChatUserList__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chat_ChatUserList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__chat_ChatUserList__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+Vue.component('example', __webpack_require__(31));
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])({
+        chatStore: function chatStore(state) {
+            return state.chatStore;
+        }
+    }),
+
+    created: function created() {
+        this.$store.dispatch('setUserList');
+    }
+});
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(32),
+  /* template */
+  __webpack_require__(33),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\chat\\ChatUserList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ChatUserList.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1954661e", Component.options)
+  } else {
+    hotAPI.reload("data-v-1954661e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])({
+        chatStore: function chatStore(state) {
+            return state.chatStore;
+        }
+    })
+
+});
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('ul', [_vm._v("\"user in chatStore.userList\">" + _vm._s(_vm.user.name))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1954661e", module.exports)
+  }
+}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-3"
+  }, [_c('chat-user-list')], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-9"
+  }, [_vm._v("\n            chat\n        ")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5a20541e", module.exports)
+  }
+}
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(9);
-var Axios = __webpack_require__(31);
-var defaults = __webpack_require__(4);
+var bind = __webpack_require__(10);
+var Axios = __webpack_require__(37);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -16295,15 +16490,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(13);
-axios.CancelToken = __webpack_require__(45);
-axios.isCancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(14);
+axios.CancelToken = __webpack_require__(51);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(46);
+axios.spread = __webpack_require__(52);
 
 module.exports = axios;
 
@@ -16312,7 +16507,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 30 */
+/* 36 */
 /***/ (function(module, exports) {
 
 /*!
@@ -16339,18 +16534,18 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 31 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(40);
-var dispatchRequest = __webpack_require__(41);
-var isAbsoluteURL = __webpack_require__(43);
-var combineURLs = __webpack_require__(44);
+var InterceptorManager = __webpack_require__(46);
+var dispatchRequest = __webpack_require__(47);
+var isAbsoluteURL = __webpack_require__(49);
+var combineURLs = __webpack_require__(50);
 
 /**
  * Create a new instance of Axios
@@ -16432,7 +16627,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 32 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16451,13 +16646,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 33 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -16484,7 +16679,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 34 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16512,7 +16707,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 35 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16587,7 +16782,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 36 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16631,7 +16826,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 37 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16706,7 +16901,7 @@ module.exports = (
 
 
 /***/ }),
-/* 38 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16749,7 +16944,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 39 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16809,7 +17004,7 @@ module.exports = (
 
 
 /***/ }),
-/* 40 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16868,16 +17063,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 41 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(42);
-var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(4);
+var transformData = __webpack_require__(48);
+var isCancel = __webpack_require__(13);
+var defaults = __webpack_require__(5);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -16954,7 +17149,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 42 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16981,7 +17176,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 43 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17002,7 +17197,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 44 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17023,13 +17218,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 45 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(13);
+var Cancel = __webpack_require__(14);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -17087,7 +17282,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 46 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17121,20 +17316,22 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 47 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_user_userStore__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_user_userStore__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_chat_chatStore__ = __webpack_require__(55);
 /*
 * @Author: admin
 * @Date:   2017-08-07 09:31:01
-* @Last Modified by:   admin
-* @Last Modified time: 2017-08-07 10:59:34
+* @Last Modified by:   Nisal
+* @Last Modified time: 2017-08-08 21:56:36
 */
+
 
 
 
@@ -17146,13 +17343,13 @@ var debug = "development" !== "production";
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	modules: {
-		userStore: __WEBPACK_IMPORTED_MODULE_2__components_user_userStore__["a" /* default */]
+		userStore: __WEBPACK_IMPORTED_MODULE_2__components_user_userStore__["a" /* default */], chatStore: __WEBPACK_IMPORTED_MODULE_3__components_chat_chatStore__["a" /* default */]
 	},
 	strict: debug
 }));
 
 /***/ }),
-/* 48 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17193,16 +17390,62 @@ var actions = {
 });
 
 /***/ }),
-/* 49 */
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(8);
+/*
+* @Author: Nisal
+* @Date:   2017-08-08 21:07:50
+* @Last Modified by:   Nisal
+* @Last Modified time: 2017-08-08 22:15:51
+*/
+/*import Vue from 'vue';
+import axios from 'axios';*/
+
+
+var state = {
+	userList: null
+};
+
+var mutations = {
+	SET_USER_LIST: function SET_USER_LIST(state, userList) {
+		state.userList = userList;
+	}
+};
+
+var actions = {
+	setUserList: function setUserList(_ref, userList) {
+		var commit = _ref.commit;
+
+		//
+
+		return axios.get(__WEBPACK_IMPORTED_MODULE_0__config__["e" /* getUserList */], { headers: Object(__WEBPACK_IMPORTED_MODULE_0__config__["c" /* getHeader */])() }).then(function (response) {
+			if (response.status == 200) {
+				commit('SET_USER_LIST', response.data);
+				console.log(response.data);
+				return response.data;
+			}
+		});
+	}
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+	state: state, mutations: mutations, actions: actions
+});
+
+/***/ }),
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(7);
 
-window._ = __webpack_require__(50);
+window._ = __webpack_require__(57);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -17211,9 +17454,9 @@ window._ = __webpack_require__(50);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(52);
+  window.$ = window.jQuery = __webpack_require__(59);
 
-  __webpack_require__(53);
+  __webpack_require__(60);
 } catch (e) {}
 
 
@@ -17227,7 +17470,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(8);
+window.axios = __webpack_require__(9);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -17261,7 +17504,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 50 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -34350,10 +34593,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(51)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(58)(module)))
 
 /***/ }),
-/* 51 */
+/* 58 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -34381,7 +34624,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 52 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -44641,7 +44884,7 @@ return jQuery;
 
 
 /***/ }),
-/* 53 */
+/* 60 */
 /***/ (function(module, exports) {
 
 /*!
@@ -47024,15 +47267,15 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 54 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(55),
+  __webpack_require__(62),
   /* template */
-  __webpack_require__(59),
+  __webpack_require__(66),
   /* styles */
   null,
   /* scopeId */
@@ -47040,7 +47283,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\Appindex.vue"
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\Appindex.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Appindex.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47051,9 +47294,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4a5440da", Component.options)
+    hotAPI.createRecord("data-v-2ea584d0", Component.options)
   } else {
-    hotAPI.reload("data-v-4a5440da", Component.options)
+    hotAPI.reload("data-v-2ea584d0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47064,13 +47307,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 55 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_include_TopMenu__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_include_TopMenu__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_include_TopMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_include_TopMenu__);
 //
 //
@@ -47101,15 +47344,15 @@ Vue.component('top-menu', __WEBPACK_IMPORTED_MODULE_1__components_include_TopMen
 });
 
 /***/ }),
-/* 56 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(57),
+  __webpack_require__(64),
   /* template */
-  __webpack_require__(58),
+  __webpack_require__(65),
   /* styles */
   null,
   /* scopeId */
@@ -47117,7 +47360,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\include\\TopMenu.vue"
+Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\include\\TopMenu.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] TopMenu.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47128,9 +47371,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-62991614", Component.options)
+    hotAPI.createRecord("data-v-3f5d24f3", Component.options)
   } else {
-    hotAPI.reload("data-v-62991614", Component.options)
+    hotAPI.reload("data-v-3f5d24f3", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47141,7 +47384,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 57 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47216,7 +47459,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 58 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -47326,12 +47569,12 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-62991614", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3f5d24f3", module.exports)
   }
 }
 
 /***/ }),
-/* 59 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -47341,94 +47584,15 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4a5440da", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2ea584d0", module.exports)
   }
 }
 
 /***/ }),
-/* 60 */
+/* 67 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(1)(
-  /* script */
-  null,
-  /* template */
-  __webpack_require__(76),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\ChatPage.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] ChatPage.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0d979964", Component.options)
-  } else {
-    hotAPI.reload("data-v-0d979964", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-lg-3"
-  }, [_vm._v("\n            user list\n        ")]), _vm._v(" "), _c('div', {
-    staticClass: "col-lg-9"
-  }, [_vm._v("\n            chat\n        ")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-0d979964", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
