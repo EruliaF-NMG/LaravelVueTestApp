@@ -3,6 +3,7 @@
         <div class="row">           
                     
         <div class="col-lg-3">
+        
            <chat-user-list></chat-user-list>
         </div>
 		<div class="col-lg-9">
@@ -20,7 +21,7 @@
     import ChatUserList from './chat/ChatUserList';
     
 
-   Vue.component('example', require('./chat/ChatUserList.vue'));
+   //Vue.component('example', require('./chat/ChatUserList.vue'));
     
 
     export default {
@@ -31,6 +32,7 @@
 
         created(){
             this.$store.dispatch('setUserList'); 
+            Vue.component('chat-user-list',ChatUserList);
         }
 
     }

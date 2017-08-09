@@ -13,13 +13,13 @@
 
 
 
-Route::get('/', function () {
+Route::get('/{any?}/{any2?}', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
+/*Route::get('/login', function () {
     return view('welcome');
 });
 Route::get('/dashboard', function () {
     return view('welcome');
-});
+});*/

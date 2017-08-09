@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div>    
         <ul>
-            <li v-for"user in chatStore.userList">{{user.name}}</li>
+            <li v-for="user in chatStore.userList">{{user.name}}</li>
         </ul>
     </div>
 </template>

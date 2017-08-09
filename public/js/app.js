@@ -1285,6 +1285,133 @@ var index_esm = {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(38);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11376,134 +11503,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(38);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 6 */
@@ -14222,13 +14222,13 @@ if (inBrowser && window.Vue) {
 /*
 * @Author: admin
 * @Date:   2017-08-06 13:45:49
-* @Last Modified by:   Nisal
-* @Last Modified time: 2017-08-08 21:38:44
+* @Last Modified by:   nishal
+* @Last Modified time: 2017-08-09 09:38:07
 */
 
 var clientId = "2";
 
-var clientSecret = "Uux8Ln9Qq2pJPed3iVzvwrauNfO0hJFnJATqmS9O";
+var clientSecret = "qlSreb1B5H4O8E4vplAVEWEnD65MlxIyC2896WV1";
 
 var apiDomain = "http://localhost:8000/";
 
@@ -14236,7 +14236,7 @@ var loginUrl = apiDomain + "oauth/token";
 
 var getUser = apiDomain + "api/user";
 
-var getUserList = apiDomain + "api/user";
+var getUserList = apiDomain + "api/getUserChatList";
 
 var getHeader = function getHeader() {
 
@@ -14557,7 +14557,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(56);
 
-window.Vue = __webpack_require__(3);
+window.Vue = __webpack_require__(5);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -14566,7 +14566,7 @@ window.Vue = __webpack_require__(3);
  */
 
 Vue.component('app', __webpack_require__(61));
-//
+
 __WEBPACK_IMPORTED_MODULE_1__routes_js__["a" /* default */].beforeEach(function (to, from, next) {
   var auth = JSON.parse(localStorage.getItem("userInfo"));
   if (to.meta.requiresAuth && to.meta.requiresAuth == true) {
@@ -15760,7 +15760,7 @@ return Promise$2;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(3)))
 
 /***/ }),
 /* 19 */
@@ -15821,7 +15821,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Example.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Example.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15832,9 +15832,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0a6bc820", Component.options)
+    hotAPI.createRecord("data-v-07f3c21a", Component.options)
   } else {
-    hotAPI.reload("data-v-0a6bc820", Component.options)
+    hotAPI.reload("data-v-07f3c21a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -15930,7 +15930,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-0a6bc820", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-07f3c21a", module.exports)
   }
 }
 
@@ -15951,7 +15951,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Login.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15962,9 +15962,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-e8077422", Component.options)
+    hotAPI.createRecord("data-v-07532db2", Component.options)
   } else {
-    hotAPI.reload("data-v-e8077422", Component.options)
+    hotAPI.reload("data-v-07532db2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16184,7 +16184,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-e8077422", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-07532db2", module.exports)
   }
 }
 
@@ -16205,7 +16205,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\Dashboard.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -16216,9 +16216,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3f17cc9a", Component.options)
+    hotAPI.createRecord("data-v-3d41ca46", Component.options)
   } else {
-    hotAPI.reload("data-v-3f17cc9a", Component.options)
+    hotAPI.reload("data-v-3d41ca46", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16251,7 +16251,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-3f17cc9a", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3d41ca46", module.exports)
   }
 }
 
@@ -16272,7 +16272,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\ChatPage.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\ChatPage.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ChatPage.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -16283,9 +16283,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5a20541e", Component.options)
+    hotAPI.createRecord("data-v-0d979964", Component.options)
   } else {
-    hotAPI.reload("data-v-5a20541e", Component.options)
+    hotAPI.reload("data-v-0d979964", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16320,12 +16320,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 
 
-Vue.component('example', __webpack_require__(31));
+//Vue.component('example', require('./chat/ChatUserList.vue'));
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -16337,6 +16339,7 @@ Vue.component('example', __webpack_require__(31));
 
     created: function created() {
         this.$store.dispatch('setUserList');
+        Vue.component('chat-user-list', __WEBPACK_IMPORTED_MODULE_1__chat_ChatUserList___default.a);
     }
 });
 
@@ -16357,7 +16360,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\chat\\ChatUserList.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\chat\\ChatUserList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ChatUserList.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -16368,9 +16371,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1954661e", Component.options)
+    hotAPI.createRecord("data-v-2c56c161", Component.options)
   } else {
-    hotAPI.reload("data-v-1954661e", Component.options)
+    hotAPI.reload("data-v-2c56c161", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16414,13 +16417,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('ul', [_vm._v("\"user in chatStore.userList\">" + _vm._s(_vm.user.name))])])
+  return _c('div', [_c('ul', _vm._l((_vm.chatStore.userList), function(user) {
+    return _c('li', [_vm._v(_vm._s(user.name))])
+  }))])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1954661e", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2c56c161", module.exports)
   }
 }
 
@@ -16443,7 +16448,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-5a20541e", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-0d979964", module.exports)
   }
 }
 
@@ -16457,7 +16462,7 @@ if (false) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(10);
 var Axios = __webpack_require__(37);
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -16540,7 +16545,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(46);
 var dispatchRequest = __webpack_require__(47);
@@ -17072,7 +17077,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(48);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(4);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -17320,7 +17325,7 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_user_userStore__ = __webpack_require__(54);
@@ -17441,7 +17446,7 @@ var actions = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(7);
 
@@ -34593,7 +34598,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(58)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(58)(module)))
 
 /***/ }),
 /* 58 */
@@ -47283,7 +47288,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\Appindex.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\Appindex.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Appindex.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47294,9 +47299,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2ea584d0", Component.options)
+    hotAPI.createRecord("data-v-4a5440da", Component.options)
   } else {
-    hotAPI.reload("data-v-2ea584d0", Component.options)
+    hotAPI.reload("data-v-4a5440da", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47360,7 +47365,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "D:\\wamp64\\www\\vue\\LaravelVueTestApp\\resources\\assets\\js\\components\\include\\TopMenu.vue"
+Component.options.__file = "C:\\wamp64\\www\\vue\\vuelaravel\\resources\\assets\\js\\components\\include\\TopMenu.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] TopMenu.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47371,9 +47376,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3f5d24f3", Component.options)
+    hotAPI.createRecord("data-v-62991614", Component.options)
   } else {
-    hotAPI.reload("data-v-3f5d24f3", Component.options)
+    hotAPI.reload("data-v-62991614", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47569,7 +47574,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-3f5d24f3", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-62991614", module.exports)
   }
 }
 
@@ -47584,7 +47589,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-2ea584d0", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-4a5440da", module.exports)
   }
 }
 

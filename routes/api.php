@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('getdata', function () {
-    return response([1,2,3,4],200);
+Route::group(['middleware'=>'auth:api'],function () {
+
+   Route::get('getUserChatList', 'UserController@getUserChatList');    
+
 });

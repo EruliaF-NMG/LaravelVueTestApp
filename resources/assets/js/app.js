@@ -20,7 +20,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('app', require('./Appindex.vue'));
-//
+
+
 router.beforeEach((to, from, next) => {
   	const auth=JSON.parse(localStorage.getItem("userInfo"));  	
   	if(to.meta.requiresAuth && to.meta.requiresAuth==true){
