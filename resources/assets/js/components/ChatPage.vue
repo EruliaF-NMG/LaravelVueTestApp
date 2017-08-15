@@ -27,7 +27,8 @@
     export default {
 
         computed: mapState({
-                chatStore: state => state.chatStore
+                chatStore: state => state.chatStore,
+                userStore: state => state.userStore
         }),
 
         created(){
