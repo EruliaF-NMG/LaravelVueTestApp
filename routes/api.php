@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware'=>'auth:api'],function () {
 
-   Route::get('getUserChatList', 'UserController@getUserChatList');    
+   Route::get('getUserChatList', 'UserController@getUserChatList');
+   Route::get('getUserConversation', 
+   			  'ChatController@getUserConversationByID');     
 
 });

@@ -1,8 +1,8 @@
 /*
 * @Author: admin
 * @Date:   2017-08-06 13:45:49
-* @Last Modified by:   Nisal
-* @Last Modified time: 2017-08-15 19:33:38
+* @Last Modified by:   nishal
+* @Last Modified time: 2017-08-16 08:48:54
 */
 
 export const clientId="2";
@@ -17,7 +17,7 @@ export const getUser=apiDomain+"api/user";
 
 export const getUserList=apiDomain+"api/getUserChatList";
 
-export const getUserconversation=apiDomain+"api/getUserconversation";
+export const getUserconversation=apiDomain+"api/getUserConversation";
 
 
 export const getHeader = function(){
