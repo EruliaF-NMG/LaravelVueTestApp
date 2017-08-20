@@ -2,13 +2,22 @@
     <div class="container">
         <div class="row">           
                     
-        <div class="col-lg-3">
-        
+        <div class="col-lg-3">        
            <chat-user-list></chat-user-list>
         </div>
-		<div class="col-lg-9">
-            chat
+		<div class="col-lg-9" >          
+           <div class="col-lg-12">
+               <chat-message-list></chat-message-list>
+           </div>
+
+
+            <div class="col-lg-12" >
+            <add-chat></add-chat>
+            </div>
         </div>
+
+
+
                
         </div>
     </div>
@@ -19,9 +28,8 @@
 
     import {mapState} from 'vuex';
     import ChatUserList from './chat/ChatUserList';
-    
-
-   //Vue.component('example', require('./chat/ChatUserList.vue'));
+    import AddChat from './chat/AddChat';
+    import ChatMessageList from './chat/ChatMessageList';
     
 
     export default {
@@ -34,6 +42,8 @@
         created(){
             this.$store.dispatch('setUserList'); 
             Vue.component('chat-user-list',ChatUserList);
+            Vue.component('add-chat',AddChat);
+            Vue.component('chat-message-list',ChatMessageList);
         }
 
     }

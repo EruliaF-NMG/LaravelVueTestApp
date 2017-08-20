@@ -8,6 +8,7 @@ import 'es6-promise/auto'
 import router from './routes.js';
 import axios from 'axios';
 import store from './store.js';
+import Echo from 'laravel-echo';
 
 require('./bootstrap');
 
@@ -39,6 +40,7 @@ const app = new Vue({
     el: '#app',
     router,
     axios,
-    store
+    store,
+    Echo
 });
 
