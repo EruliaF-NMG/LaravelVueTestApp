@@ -23,7 +23,15 @@ Route::group(['middleware'=>'auth:api'],function () {
    Route::get('getUserChatList', 'UserController@getUserChatList');
    Route::get('getUserConversation', 
    			  'ChatController@getUserConversationByID');  
-   Route::post('setUserconversation','ChatController@setUserconversation');    
+   Route::post('setUserconversation','ChatController@setUserconversation');
+
+
+
+ Route::get('getUserNotification','PrivateMessageController@getUserNotification');
+ Route::get('getPrivateMessages','PrivateMessageController@getPrivateMessages');
+ Route::post('getPrivateMessageById','PrivateMessageController@getPrivateMessageById');
+ Route::post('getPrivateMessageSent','PrivateMessageController@getPrivateMessageSent');
+ Route::post('sentPrivateMessage','PrivateMessageController@sentPrivateMessage');     
 
 });
 
