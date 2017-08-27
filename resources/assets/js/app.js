@@ -21,6 +21,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('app', require('./Appindex.vue'));
+//Vue.component('multiselect',Multiselect);
 
 
 router.beforeEach((to, from, next) => {

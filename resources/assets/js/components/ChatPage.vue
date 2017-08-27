@@ -39,7 +39,7 @@
                 userStore: state => state.userStore
         }),
 
-        created(){
+        created(){            
             this.$store.dispatch('setUserList'); 
             Vue.component('chat-user-list',ChatUserList);
             Vue.component('add-chat',AddChat);

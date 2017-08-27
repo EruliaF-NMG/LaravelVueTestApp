@@ -11930,6 +11930,18 @@ a.list-group-item-danger.active:focus {
   color: #333333;
 }
 
+.messageWrapper .messageList .list-group .router-link-active {
+  background-color: #337AB7;
+}
+
+.messageWrapper .messageList .list-group .router-link-active a {
+  color: #ffff !important;
+}
+
+.inboxtable .unread {
+  font-weight: bolder !important;
+}
+
 /*
 -----------------------------------------------
 ViU web app footer Part 

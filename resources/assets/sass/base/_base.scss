@@ -522,3 +522,31 @@ a.list-group-item {
 .popover {
   color: $text-color;
 }
+
+
+.messageWrapper {
+
+    .messageList{
+      .list-group{
+
+        .list-group-item{
+          
+        }
+         .router-link-active{
+          background-color:#337AB7;
+           a {
+            color: #ffff !important;
+           }
+         }
+      }
+    }
+
+} 
+
+.inboxtable{
+
+  .unread{
+    font-weight: bolder !important;
+  }
+
+}

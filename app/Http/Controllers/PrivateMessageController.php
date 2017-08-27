@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\PrivateMessage;
+use Redis;
 
 class PrivateMessageController extends Controller
 {
@@ -57,8 +58,10 @@ class PrivateMessageController extends Controller
 
     public function sentPrivateMessage(Request $request){
 
+        $authUser=$request->user()->id;
+
         $message = [
-        'sender_id' => $request->input('sender_id'), 
+        'sender_id' => $authUser, 
         'receiver_id' => $request->input('receiver_id'),
         'message' => $request->input('message'),
         'read' => 0,
@@ -68,6 +71,9 @@ class PrivateMessageController extends Controller
         $createData=PrivateMessage::create($message);
 
         $message=PrivateMessage::where('id',$createData->id)->first();
+
+        $redis = Redis::connection();
+        $redis->publish('message',$message);
 
         return response($message,201);
         

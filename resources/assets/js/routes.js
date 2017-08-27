@@ -27,6 +27,26 @@ let routes = [
    path: '/chat', 
    component:require('./components/ChatPage'),
    meta: { requiresAuth: true }
+  },
+  { 
+   path: '/message', 
+   component:require('./components/message/MessageInbox'),
+   meta: { requiresAuth: true }
+  },
+  { 
+   path: '/sent', 
+   component:require('./components/message/MessageSent'),
+   meta: { requiresAuth: true }
+  },
+  { 
+   path: '/create', 
+   component:require('./components/message/MessageCreate'),
+   meta: { requiresAuth: true }
+  },
+  { 
+   path: '/message/:id', 
+   component:require('./components/message/MessageView'),
+   meta: { requiresAuth: true }
   }
 ];
 

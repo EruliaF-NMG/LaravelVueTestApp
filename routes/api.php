@@ -30,7 +30,7 @@ Route::group(['middleware'=>'auth:api'],function () {
  Route::get('getUserNotification','PrivateMessageController@getUserNotification');
  Route::get('getPrivateMessages','PrivateMessageController@getPrivateMessages');
  Route::post('getPrivateMessageById','PrivateMessageController@getPrivateMessageById');
- Route::post('getPrivateMessageSent','PrivateMessageController@getPrivateMessageSent');
+ Route::get('getPrivateMessageSent','PrivateMessageController@getPrivateMessageSent');
  Route::post('sentPrivateMessage','PrivateMessageController@sentPrivateMessage');     
 
 });

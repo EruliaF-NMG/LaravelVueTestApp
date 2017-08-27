@@ -22,6 +22,9 @@
         <router-link to="/chat" tag="li">
               <a>Chat</a>
         </router-link>
+        <router-link to="/message" tag="li">
+              <a>Message</a>
+        </router-link>
         
       </ul>
      
